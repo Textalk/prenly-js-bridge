@@ -1,0 +1,15 @@
+{
+  "name": "prenly-js-bridge",
+  "version": "0.0.1",
+  "description": "The Prenly App SDK is a JavaScript toolkit tailored for developers looking to integrate their web sites seamlessly with the Prenly native apps, focusing on user authentication and consent management. This repository contains the distribution files for the JavaScript SDK.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Textalk/prenly-js-bridge.git"
+  },
+  "author": "Textalk AB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Textalk/prenly-js-bridge/issues"
+  },
+  "homepage": "https://github.com/Textalk/prenly-js-bridge#readme"
+}
