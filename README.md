@@ -5,6 +5,8 @@ The Prenly App SDK is a JavaScript toolkit tailored for developers looking to in
 ## Instantiation
 
 ```typescript
+import PrenlyAppSDK from 'prenly-js-bridge';
+
 const { api } = new PrenlyAppSDK();
 ```
 
