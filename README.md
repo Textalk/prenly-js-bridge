@@ -5,7 +5,7 @@ The Prenly App SDK is a JavaScript toolkit tailored for developers looking to in
 ## Instantiation
 
 ```typescript
-import PrenlyAppSDK from 'prenly-js-bridge';
+import PrenlyAppSDK from "prenly-js-bridge";
 
 const { api } = new PrenlyAppSDK();
 ```
@@ -127,8 +127,8 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
   status:
     | 'playing'
     | 'paused'
-    | 'stopped';
-    | 'error'
+    | 'stopped'
+    | 'error';
 }
 
 ```
@@ -141,7 +141,7 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
     | 'rejected'
     | 'feature_disabled'
     | 'login_failed'
-    | 'logout_failed';
+    | 'logout_failed'
     | 'play_audio_failed'
     | 'pause_audio_failed';
 
