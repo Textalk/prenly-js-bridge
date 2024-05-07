@@ -1,3 +1,21 @@
+declare type AudioData = {
+    id: string;
+    audio_url: string;
+    image_url?: string;
+    title: string;
+    description: string;
+    duration: number;
+};
+
+declare type AudioId = {
+    id: string;
+};
+
+declare type AudioStatus = {
+    id: string;
+    status: 'playing' | 'paused' | 'stopped' | 'error';
+};
+
 declare class PrenlyAppSDK {
     supportedVersion: string | undefined;
     api: PublicApiV1 | undefined;
@@ -12,22 +30,27 @@ declare type PublicApiV1 = {
     version: string;
     login: () => Promise<UserDataJwt | PublicRequestError>;
     logout: () => Promise<UserDataJwt | PublicRequestError>;
+    showNoAccessAlert: () => Promise<void>;
     getUserJwt: () => Promise<UserDataJwt | PublicRequestError>;
     getUserConsent: () => Promise<UserConsent | null | PublicRequestError>;
+    playAudio: (data: AudioData) => Promise<AudioStatus | PublicRequestError>;
+    pauseAudio: () => Promise<AudioStatus | PublicRequestError>;
+    getAudioStatus: (data: AudioId) => Promise<AudioStatus | PublicRequestError>;
     on: <T extends PublicEventType>(type: T, callback: PublicEventTypeToCallback[T]) => void;
     off: <T extends PublicEventType>(type: T, callback?: PublicEventTypeToCallback[T]) => void;
 };
 
-declare type PublicEventType = 'userConsentChange' | 'userLogin' | 'userLogout';
+declare type PublicEventType = 'userConsentChange' | 'userLogin' | 'userLogout' | 'audioStatusChange';
 
 declare type PublicEventTypeToCallback = {
     userConsentChange: (data: UserConsent, prevData?: UserConsent) => void;
     userLogin: (data: UserDataJwt) => void;
     userLogout: (data: UserDataJwt) => void;
+    audioStatusChange: (data: AudioStatus, prevData?: AudioStatus) => void;
 };
 
 declare type PublicRequestError = {
-    code: 'rejected' | 'feature_disabled' | 'login_failed' | 'logout_failed' | string;
+    code: 'rejected' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_audio_failed' | 'pause_audio_failed' | string;
     message?: string;
 };
 

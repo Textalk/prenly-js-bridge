@@ -160,25 +160,64 @@ var __publicField = (obj, key, value) => {
     return {
       version: "1.0",
       async login() {
-        return postMessageHandler.sendMessageAsync("prenly_login", void 0, {
-          useTimeout: false
-        });
+        return postMessageHandler.sendMessageAsync(
+          "prenly_login",
+          void 0,
+          {
+            useTimeout: false
+          }
+        );
       },
       async logout() {
-        return postMessageHandler.sendMessageAsync("prenly_logout");
+        return postMessageHandler.sendMessageAsync(
+          "prenly_logout"
+        );
+      },
+      async showNoAccessAlert() {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_show_no_access_alert"
+        );
       },
       async getUserJwt() {
-        return postMessageHandler.sendMessageAsync("prenly_get_user_jwt");
+        return postMessageHandler.sendMessageAsync(
+          "prenly_get_user_jwt"
+        );
       },
       async getUserConsent() {
-        return postMessageHandler.sendMessageAsync("prenly_get_user_consent");
+        return postMessageHandler.sendMessageAsync(
+          "prenly_get_user_consent"
+        );
+      },
+      async playAudio(data) {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_play_audio",
+          data
+        );
+      },
+      async pauseAudio() {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_pause_audio"
+        );
+      },
+      async getAudioStatus(data) {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_get_audio_status",
+          data
+        );
       },
       on(type, callback) {
         const params = getEventParams(type);
-        postMessageHandler.on(params.type, callback, params.usePrevData);
+        postMessageHandler.on(
+          params.type,
+          callback,
+          params.usePrevData
+        );
       },
       off(type, callback) {
-        postMessageHandler.off(getEventParams(type).type, callback);
+        postMessageHandler.off(
+          getEventParams(type).type,
+          callback
+        );
       }
     };
   }
@@ -190,6 +229,8 @@ var __publicField = (obj, key, value) => {
         return { type: "prenly_on_user_login", usePrevData: false };
       case "userLogout":
         return { type: "prenly_on_user_logout", usePrevData: false };
+      case "audioStatusChange":
+        return { type: "prenly_on_audio_status_change", usePrevData: true };
       default:
         throw new Error(`Unknown event type: ${type}.`);
     }

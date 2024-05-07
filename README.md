@@ -14,12 +14,16 @@ const { api } = new PrenlyAppSDK();
 
 ### Functions
 
-| Function         | Signature                                                                  | Description                                                                      |
-| ---------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Login            | `prenlyApp.login(): Promise<UserDataJwt \| RequestError>`                  | Trigger a login flow in the app.                                                 |
-| Logout           | `prenlyApp.logout(): Promise<UserDataJwt \| RequestError>`                 | Trigger a logout flow in the app.                                                |
-| Get user JWT     | `prenlyApp.getUserJwt(): Promise<UserDataJwt \| RequestError>`             | Retrieve information about the user as a JWT.                                    |
-| Get user consent | `prenlyApp.getUserConsent(): Promise<UserConsent \| null \| RequestError>` | Retrieve the current consent that the user granted, or _null_ if no CMP is used. |
+| Function             | Signature                                                                  | Description                                                                      |
+| -------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Login                | `prenlyApp.login(): Promise<UserDataJwt \| RequestError>`                  | Trigger a login flow in the app.                                                 |
+| Logout               | `prenlyApp.logout(): Promise<UserDataJwt \| RequestError>`                 | Trigger a logout flow in the app.                                                |
+| Show no access alert | `prenlyApp.showNoAccessAlert(): Promise<void>`                             | Trigger a show no access alert flow in the app.                                  |
+| Get user JWT         | `prenlyApp.getUserJwt(): Promise<UserDataJwt \| RequestError>`             | Retrieve information about the user as a Jwt.                                    |
+| Get user consent     | `prenlyApp.getUserConsent(): Promise<UserConsent \| null \| RequestError>` | Retrieve the current consent that the user granted, or _null_ if no CMP is used. |
+| Play audio           | `prenlyApp.playAudio(AudioData): Promise<AudioStatus \| RequestError>`     | Add audio and play it using the native app player.                               |
+| Pause audio          | `prenlyApp.pauseAudio(): Promise<AudioStatus \| RequestError>`             | Pause audio playback initialized by the SDK.                                     |
+| Get audio status     | `prenlyApp.getAudioStatus(AudioId): Promise<AudioStatus \| RequestError>`  | Retrieve audio status.                                                           |
 
 #### Example
 
@@ -46,11 +50,12 @@ try {
 
 #### Types
 
-| Type              | Data        | Description                             |
-| ----------------- | ----------- | --------------------------------------- |
-| userConsentChange | UserConsent | Triggers when the user consent changes. |
-| userLogin         | UserDataJwt | Triggers when the user logs in.         |
-| userLogout        | UserDataJwt | Triggers when the user logs out.        |
+| Type              | Data        | Description                                                          |
+| ----------------- | ----------- | -------------------------------------------------------------------- |
+| userConsentChange | UserConsent | Triggers when the user consent changes.                              |
+| userLogin         | UserDataJwt | Triggers when the user logs in.                                      |
+| userLogout        | UserDataJwt | Triggers when the user logs out.                                     |
+| audioStatusChange | AudioStatus | Triggers when the status of audio initialized by the SDK is changed. |
 
 #### Callback Parameters
 
@@ -93,6 +98,41 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
 }
 ```
 
+#### AudioId
+
+```typescript
+{
+  id: string;
+}
+```
+
+#### AudioData
+
+```typescript
+{
+  id: string;
+  audio_url: string;
+  image_url?: string;
+  title: string;
+  description: string;
+  duration: number;
+}
+```
+
+#### AudioStatus
+
+```typescript
+{
+  id: string;
+  status:
+    | 'playing'
+    | 'paused'
+    | 'stopped';
+    | 'error'
+}
+
+```
+
 #### RequestError
 
 ```typescript
@@ -102,6 +142,9 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
     | 'feature_disabled'
     | 'login_failed'
     | 'logout_failed';
+    | 'play_audio_failed'
+    | 'pause_audio_failed';
+
   message?: string;
 }
 ```
