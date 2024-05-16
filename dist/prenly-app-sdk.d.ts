@@ -13,7 +13,7 @@ declare type AudioId = {
 
 declare type AudioStatus = {
     id: string;
-    status: 'playing' | 'paused' | 'stopped' | 'error';
+    status: 'playing' | 'paused' | 'loading';
 };
 
 declare class PrenlyAppSDK {
@@ -33,8 +33,8 @@ declare type PublicApiV1 = {
     showNoAccessAlert: () => Promise<void>;
     getUserJwt: () => Promise<UserDataJwt | PublicRequestError>;
     getUserConsent: () => Promise<UserConsent | null | PublicRequestError>;
-    playAudio: (data: AudioData) => Promise<AudioStatus | PublicRequestError>;
-    pauseAudio: () => Promise<AudioStatus | PublicRequestError>;
+    showUserConsentDialog: () => Promise<void | PublicRequestError>;
+    playPauseAudio: (data: AudioData) => Promise<void | PublicRequestError>;
     getAudioStatus: (data: AudioId) => Promise<AudioStatus | PublicRequestError>;
     on: <T extends PublicEventType>(type: T, callback: PublicEventTypeToCallback[T]) => void;
     off: <T extends PublicEventType>(type: T, callback?: PublicEventTypeToCallback[T]) => void;
@@ -50,7 +50,7 @@ declare type PublicEventTypeToCallback = {
 };
 
 declare type PublicRequestError = {
-    code: 'rejected' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_audio_failed' | 'pause_audio_failed' | string;
+    code: 'rejected' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | string;
     message?: string;
 };
 
