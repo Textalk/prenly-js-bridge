@@ -184,15 +184,15 @@ function getApiV1(postMessageHandler) {
         "prenly_get_user_consent"
       );
     },
-    async playAudio(data) {
+    async showUserConsentDialog() {
       return postMessageHandler.sendMessageAsync(
-        "prenly_play_audio",
-        data
+        "prenly_show_user_consent_dialog"
       );
     },
-    async pauseAudio() {
+    async playPauseAudio(data) {
       return postMessageHandler.sendMessageAsync(
-        "prenly_pause_audio"
+        "prenly_play_pause_audio",
+        data
       );
     },
     async getAudioStatus(data) {
