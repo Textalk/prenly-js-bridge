@@ -23,6 +23,7 @@ const { api } = new PrenlyAppSDK();
 | Get user consent         | `prenlyApp.getUserConsent(): Promise<UserConsent \| null \| RequestError>` | Retrieve the current consent that the user granted, or _null_ if no CMP is used. |
 | Show user consent dialog | `prenlyApp.showUserConsentDialog(): Promise<void \| RequestError>`         | Trigger the display of the consent dialog.                                       |
 | Play or pause audio      | `prenlyApp.playPauseAudio(AudioData): Promise<void \| RequestError>`       | Add audio and play it using the native app player, or pause when playing.        |
+| Queue or dequeue audio   | `prenlyApp.queueDequeueAudio(AudioData): Promise<void \| RequestError>`    | Queue or dequeue audio using the native app player.                              |
 | Get audio status         | `prenlyApp.getAudioStatus(AudioId): Promise<AudioStatus \| RequestError>`  | Retrieve audio status.                                                           |
 
 #### Example
@@ -72,7 +73,7 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
 });
 ```
 
-### Response data
+### Data models
 
 #### UserDataJwt
 
@@ -125,6 +126,7 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
 {
   id: string;
   status: "playing" | "paused" | "loading";
+  queued: boolean;
 }
 ```
 
@@ -137,8 +139,8 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
     | 'feature_disabled'
     | 'login_failed'
     | 'logout_failed'
-    | 'play_pause_audio_failed';
-
+    | 'play_pause_audio_failed'
+    | 'queue_dequeue_audio_failed';
   message?: string;
 }
 ```

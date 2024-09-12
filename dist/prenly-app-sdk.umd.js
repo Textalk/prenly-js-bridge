@@ -199,6 +199,12 @@ var __publicField = (obj, key, value) => {
           data
         );
       },
+      async queueDequeueAudio(data) {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_queue_dequeue_audio",
+          data
+        );
+      },
       async getAudioStatus(data) {
         return postMessageHandler.sendMessageAsync(
           "prenly_get_audio_status",
