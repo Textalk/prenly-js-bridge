@@ -2,6 +2,12 @@
 
 The Prenly App SDK is a JavaScript toolkit tailored for developers looking to integrate their web sites seamlessly with the Prenly native apps, focusing on user authentication and consent management. This repository contains the distribution files for the JavaScript SDK.
 
+## Install
+
+```
+npm i prenly-js-bridge
+```
+
 ## Instantiation
 
 ```typescript
@@ -80,6 +86,22 @@ prenlyApp.on("userConsentChange", (data: UserConsent) => {
 ```typescript
 {
   jwt: string;
+}
+```
+
+The decoded JWT string contains _header_, _payload_ and _signature_.
+The payload has the following definition:
+
+```typescript
+{
+  // Standard claims:
+  sub?: string;
+  given_name?: string;
+  family_name?: string;
+  email?: string;
+  // Custom claims:
+  customer_number?: string;
+  is_logged_in: boolean;
 }
 ```
 
