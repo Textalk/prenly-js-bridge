@@ -101,6 +101,7 @@ The payload has the following definition:
   email?: string;
   // Custom claims:
   customer_number?: string;
+  prenly_package_slugs?: string[];
   is_logged_in: boolean;
 }
 ```
