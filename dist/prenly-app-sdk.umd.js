@@ -38,8 +38,7 @@ var __publicField = (obj, key, value) => {
         let eventData;
         try {
           eventData = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
-        } catch (error2) {
-          console.error(error2);
+        } catch {
           return;
         }
         const { requestId, type, data, error } = eventData;
