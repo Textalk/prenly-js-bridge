@@ -1,12 +1,18 @@
 {
   "name": "prenly-js-bridge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Prenly App SDK is a JavaScript toolkit tailored for developers looking to integrate their web sites seamlessly with the Prenly native apps, focusing on user authentication and consent management. This repository contains the distribution files for the JavaScript SDK.",
   "main": "dist/prenly-app-sdk.umd.js",
   "module": "dist/prenly-app-sdk.es.js",
   "types": "dist/prenly-app-sdk.d.ts",
-  "files": ["dist/*"],
-  "keywords": ["prenly", "jsbridge", "sdk"],
+  "files": [
+    "dist/*"
+  ],
+  "keywords": [
+    "prenly",
+    "jsbridge",
+    "sdk"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Textalk/prenly-js-bridge.git"
