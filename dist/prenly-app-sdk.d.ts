@@ -64,6 +64,7 @@ declare type UserConsent = {
         marketing: boolean;
     };
     tc_string?: string;
+    att_granted?: boolean;
     cmp_purpose_grants?: {
         [purpose: string]: boolean;
     };
