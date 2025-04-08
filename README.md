@@ -117,6 +117,7 @@ The payload has the following definition:
     marketing: boolean;
   };
   tc_string?: string;
+  att_granted?: boolean;
   cmp_purpose_grants?: { [purpose: string]: boolean };
   cmp_vendor_grants?: { [vendor: string]: boolean };
 }
