@@ -206,6 +206,12 @@ function getApiV1(postMessageHandler) {
         data
       );
     },
+    async setComponentData(data) {
+      return postMessageHandler.sendMessageAsync(
+        "prenly_set_component_data",
+        data
+      );
+    },
     on(type, callback) {
       const params = getEventParams(type);
       postMessageHandler.on(
@@ -232,6 +238,8 @@ function getEventParams(type) {
       return { type: "prenly_on_user_logout", usePrevData: false };
     case "audioStatusChange":
       return { type: "prenly_on_audio_status_change", usePrevData: true };
+    case "componentItemVisible":
+      return { type: "prenly_on_component_item_visible", usePrevData: true };
     default:
       throw new Error(`Unknown event type: ${type}.`);
   }
@@ -250,7 +258,7 @@ class PrenlyAppSDK {
   }
   setApi(postMessageHandler) {
     if (!this.supportedVersion) {
-      console.error(
+      console.info(
         "Prenly JS Bridge was not found. Please verify that the environment supports this feature and that it is properly activated."
       );
       return;

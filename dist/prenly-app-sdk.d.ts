@@ -17,6 +17,24 @@ declare type AudioStatus = {
     queued: boolean;
 };
 
+declare type ComponentData = {
+    id: string;
+    items: {
+        id: string;
+        header: string;
+        subheader: string;
+        deeplink_url: string;
+        image_url: string;
+        image_width?: number;
+        image_height?: number;
+    }[];
+};
+
+declare type ComponentItemVisible = {
+    component_id: string;
+    item_id: string;
+};
+
 declare class PrenlyAppSDK {
     supportedVersion: string | undefined;
     api: PublicApiV1 | undefined;
@@ -38,17 +56,19 @@ declare type PublicApiV1 = {
     playPauseAudio: (data: AudioData) => Promise<void | PublicRequestError>;
     queueDequeueAudio: (data: AudioData) => Promise<void | PublicRequestError>;
     getAudioStatus: (data: AudioId) => Promise<AudioStatus | PublicRequestError>;
+    setComponentData: (data: ComponentData) => Promise<void | PublicRequestError>;
     on: <T extends PublicEventType>(type: T, callback: PublicEventTypeToCallback[T]) => void;
     off: <T extends PublicEventType>(type: T, callback?: PublicEventTypeToCallback[T]) => void;
 };
 
-declare type PublicEventType = 'userConsentChange' | 'userLogin' | 'userLogout' | 'audioStatusChange';
+declare type PublicEventType = 'userConsentChange' | 'userLogin' | 'userLogout' | 'audioStatusChange' | 'componentItemVisible';
 
 declare type PublicEventTypeToCallback = {
     userConsentChange: (data: UserConsent, prevData?: UserConsent) => void;
     userLogin: (data: UserDataJwt) => void;
     userLogout: (data: UserDataJwt) => void;
     audioStatusChange: (data: AudioStatus, prevData?: AudioStatus) => void;
+    componentItemVisible: (data: ComponentItemVisible, prevData?: ComponentItemVisible) => void;
 };
 
 declare type PublicRequestError = {
