@@ -72,7 +72,7 @@ declare type PublicEventTypeToCallback = {
 };
 
 declare type PublicRequestError = {
-    code: 'rejected' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | string;
+    code: 'rejected' | 'not_supported' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | 'set_component_data_failed' | string;
     message?: string;
 };
 
