@@ -47,18 +47,19 @@ export default PrenlyAppSDK;
 
 declare type PublicApiV1 = {
     version: string;
-    login: () => Promise<UserDataJwt | PublicRequestError>;
-    logout: () => Promise<UserDataJwt | PublicRequestError>;
+    login: () => Promise<UserDataJwt>;
+    logout: () => Promise<UserDataJwt>;
     showNoAccessAlert: () => Promise<void>;
-    getUserJwt: () => Promise<UserDataJwt | PublicRequestError>;
-    getUserConsent: () => Promise<UserConsent | null | PublicRequestError>;
-    showUserConsentDialog: () => Promise<void | PublicRequestError>;
-    playPauseAudio: (data: AudioData) => Promise<void | PublicRequestError>;
-    queueDequeueAudio: (data: AudioData) => Promise<void | PublicRequestError>;
-    getAudioStatus: (data: AudioId) => Promise<AudioStatus | PublicRequestError>;
-    setComponentData: (data: ComponentData) => Promise<void | PublicRequestError>;
+    getUserJwt: () => Promise<UserDataJwt>;
+    getUserConsent: () => Promise<UserConsent | null>;
+    showUserConsentDialog: () => Promise<void>;
+    playPauseAudio: (data: AudioData) => Promise<void>;
+    queueDequeueAudio: (data: AudioData) => Promise<void>;
+    getAudioStatus: (data: AudioId) => Promise<AudioStatus>;
+    setComponentData: (data: ComponentData) => Promise<void>;
     on: <T extends PublicEventType>(type: T, callback: PublicEventTypeToCallback[T]) => void;
     off: <T extends PublicEventType>(type: T, callback?: PublicEventTypeToCallback[T]) => void;
+    isRequestError: (error: unknown) => error is RequestError<PublicRequestError['code']>;
 };
 
 declare type PublicEventType = 'userConsentChange' | 'userLogin' | 'userLogout' | 'audioStatusChange' | 'componentItemVisible';
@@ -72,9 +73,20 @@ declare type PublicEventTypeToCallback = {
 };
 
 declare type PublicRequestError = {
-    code: 'rejected' | 'not_supported' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | 'set_component_data_failed' | string;
+    code: RequestErrorBaseCode | 'not_supported' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | 'set_component_data_failed';
     message?: string;
 };
+
+declare class RequestError<T = string> extends Error {
+    code: T;
+    constructor(code: T, message?: string);
+    toJSON(): {
+        message: string | undefined;
+        code: T;
+    };
+}
+
+declare type RequestErrorBaseCode = 'rejected';
 
 declare type UserConsent = {
     cmp: string;

@@ -20,39 +20,44 @@ const { api } = new PrenlyAppSDK();
 
 ### Functions
 
-| Function                 | Signature                                                                  | Description                                                                         |
-| ------------------------ | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Login                    | `prenlyApp.login(): Promise<UserDataJwt \| RequestError>`                  | Trigger a login flow in the app.                                                    |
-| Logout                   | `prenlyApp.logout(): Promise<UserDataJwt \| RequestError>`                 | Trigger a logout flow in the app.                                                   |
-| Show no access alert     | `prenlyApp.showNoAccessAlert(): Promise<void>`                             | Trigger a show no access alert flow in the app.                                     |
-| Get user JWT             | `prenlyApp.getUserJwt(): Promise<UserDataJwt \| RequestError>`             | Retrieve information about the user as a Jwt.                                       |
-| Get user consent         | `prenlyApp.getUserConsent(): Promise<UserConsent \| null \| RequestError>` | Retrieve the current consent that the user granted, or _null_ if no CMP is used.    |
-| Show user consent dialog | `prenlyApp.showUserConsentDialog(): Promise<void \| RequestError>`         | Trigger the display of the consent dialog.                                          |
-| Play or pause audio      | `prenlyApp.playPauseAudio(AudioData): Promise<void \| RequestError>`       | Add audio and play it using the native app player, or pause when playing.           |
-| Queue or dequeue audio   | `prenlyApp.queueDequeueAudio(AudioData): Promise<void \| RequestError>`    | Queue or dequeue audio using the native app player.                                 |
-| Get audio status         | `prenlyApp.getAudioStatus(AudioId): Promise<AudioStatus \| RequestError>`  | Retrieve audio status.                                                              |
-| Set component data       | `prenlyApp.setComponentData(ComponentData): Promise<void \| RequestError>` | Set custom data to be displayed in the start page component connected to a webview. |
+| Function                 | Signature                                            | Description                                                                         |
+| ------------------------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Login                    | `api.login(): Promise<UserDataJwt>`                  | Trigger a login flow in the app.                                                    |
+| Logout                   | `api.logout(): Promise<UserDataJwt>`                 | Trigger a logout flow in the app.                                                   |
+| Show no access alert     | `api.showNoAccessAlert(): Promise<void>`             | Trigger a show no access alert flow in the app.                                     |
+| Get user JWT             | `api.getUserJwt(): Promise<UserDataJwt>`             | Retrieve information about the user as a Jwt.                                       |
+| Get user consent         | `api.getUserConsent(): Promise<UserConsent \| null>` | Retrieve the current consent that the user granted, or _null_ if no CMP is used.    |
+| Show user consent dialog | `api.showUserConsentDialog(): Promise<void>`         | Trigger the display of the consent dialog.                                          |
+| Play or pause audio      | `api.playPauseAudio(AudioData): Promise<void>`       | Add audio and play it using the native app player, or pause when playing.           |
+| Queue or dequeue audio   | `api.queueDequeueAudio(AudioData): Promise<void>`    | Queue or dequeue audio using the native app player.                                 |
+| Get audio status         | `api.getAudioStatus(AudioId): Promise<AudioStatus>`  | Retrieve audio status.                                                              |
+| Set component data       | `api.setComponentData(ComponentData): Promise<void>` | Set custom data to be displayed in the start page component connected to a webview. |
 
 #### Example
 
 ```typescript
-const { api: prenlyApp } = new PrenlyAppSDK();
+import PrenlyAppSDK from "prenly-js-bridge";
+
+const { api } = new PrenlyAppSDK();
 
 try {
-  const userJwt = await prenlyApp.getUserJwt();
-  // Do stuff with `userJwt`.
+  const userJwt = await api.getUserJwt();
+  // Do something with `userJwt`.
 } catch (error) {
-  // If the promise was rejected, handle the error.
+  // If the promise was rejected, check the error `code`.
+  if (api.isRequestError(error) && error.code === "rejected") {
+    // ...
+  }
 }
 ```
 
 ### Event listeners
 
-| Function                              | Signature                                                                     |
-| ------------------------------------- | ----------------------------------------------------------------------------- |
-| Start listening                       | `prenlyApp.on(EventType, (current: Object, previous?: Object) => void): void` |
-| Stop listening (single listener)      | `prenlyApp.off(EventType, handler): void`                                     |
-| Stop listening (all events of a type) | `prenlyApp.off(EventType): void`                                              |
+| Function                              | Signature                                                               |
+| ------------------------------------- | ----------------------------------------------------------------------- |
+| Start listening                       | `api.on(EventType, (current: Object, previous?: Object) => void): void` |
+| Stop listening (single listener)      | `api.off(EventType, handler): void`                                     |
+| Stop listening (all events of a type) | `api.off(EventType): void`                                              |
 
 ### Events
 
@@ -76,7 +81,7 @@ try {
 #### Example
 
 ```typescript
-prenlyApp.on("userConsentChange", (data: UserConsent) => {
+api.on("userConsentChange", (data: UserConsent) => {
   // ...
 });
 ```
@@ -182,7 +187,7 @@ The payload has the following definition:
 }
 ```
 
-#### RequestError
+#### RequestError (extends Error)
 
 ```typescript
 {
