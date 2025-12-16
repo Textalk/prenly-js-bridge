@@ -15,6 +15,20 @@ function promiseCreator() {
   });
   return { promise, resolve, reject };
 }
+class RequestError extends Error {
+  constructor(code, message) {
+    super(message);
+    __publicField(this, "code");
+    this.code = code;
+    Object.setPrototypeOf(this, RequestError.prototype);
+  }
+  toJSON() {
+    return {
+      message: this.message || void 0,
+      code: this.code
+    };
+  }
+}
 class PostMessageHandler {
   constructor({
     timeoutDuration = 6e4,
@@ -53,7 +67,9 @@ class PostMessageHandler {
   }
   processPendingRequest(requestId, data, error) {
     if (error) {
-      this.pendingRequests[requestId].reject(error);
+      this.pendingRequests[requestId].reject(
+        new RequestError(error.code, error.message)
+      );
     } else {
       this.pendingRequests[requestId].resolve(data);
     }
@@ -79,17 +95,18 @@ class PostMessageHandler {
         ...useTimeout ? [
           new Promise(
             () => timer = setTimeout(
-              () => promReject({
-                code: "rejected",
-                message: `Request timed out after ${this.timeoutDuration} milliseconds.`
-              }),
+              () => promReject(
+                new RequestError(
+                  "rejected",
+                  `Request timed out after ${this.timeoutDuration} milliseconds.`
+                )
+              ),
               this.timeoutDuration
             )
           )
         ] : []
       ]);
     } catch (error) {
-      console.error(error);
     } finally {
       if (timer) {
         clearTimeout(timer);
@@ -225,6 +242,9 @@ function getApiV1(postMessageHandler) {
         getEventParams(type).type,
         callback
       );
+    },
+    isRequestError(error) {
+      return error instanceof RequestError;
     }
   };
 }
