@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.0.1] - 2026-02-11
+
+- Update JWT definition and add OTLC in README
+
 ## [v2.0.0] - 2025-12-16
 
 ### Breaking changes
