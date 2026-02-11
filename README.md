@@ -97,18 +97,19 @@ api.on("userConsentChange", (data: UserConsent) => {
 ```
 
 The decoded JWT string contains _header_, _payload_ and _signature_.
-The payload has the following definition:
+In addition to the standard claims, the payload also includes the following:
 
 ```typescript
 {
-  // Standard claims:
-  sub?: string;
+  // Common user-related claims:
   given_name?: string;
   family_name?: string;
   email?: string;
+
   // Custom claims:
   customer_number?: string;
   prenly_package_slugs?: string[];
+  otlc?: string;
   is_logged_in: boolean;
 }
 ```
