@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.1.0] - 2026-05-21
+
+- Added new API methods `getPushTopics`, `subscribePushTopics`, and `unsubscribePushTopics` for managing push notification topic subscriptions.
+
 ## [v2.0.1] - 2026-02-11
 
 - Update JWT definition and add OTLC in README

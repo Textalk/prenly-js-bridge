@@ -233,6 +233,23 @@ var __publicField = (obj, key, value) => {
           data
         );
       },
+      async getPushTopics() {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_get_push_topics"
+        );
+      },
+      async subscribePushTopics(data) {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_subscribe_push_topics",
+          data
+        );
+      },
+      async unsubscribePushTopics(data) {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_unsubscribe_push_topics",
+          data
+        );
+      },
       on(type, callback) {
         const params = getEventParams(type);
         postMessageHandler.on(
