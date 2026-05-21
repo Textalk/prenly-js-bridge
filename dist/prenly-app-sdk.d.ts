@@ -57,6 +57,9 @@ declare type PublicApiV1 = {
     queueDequeueAudio: (data: AudioData) => Promise<void>;
     getAudioStatus: (data: AudioId) => Promise<AudioStatus>;
     setComponentData: (data: ComponentData) => Promise<void>;
+    getPushTopics: () => Promise<PushTopicData>;
+    subscribePushTopics: (data: PushTopicIds) => Promise<void>;
+    unsubscribePushTopics: (data: PushTopicIds) => Promise<void>;
     on: <T extends PublicEventType>(type: T, callback: PublicEventTypeToCallback[T]) => void;
     off: <T extends PublicEventType>(type: T, callback?: PublicEventTypeToCallback[T]) => void;
     isRequestError: (error: unknown) => error is RequestError<PublicRequestError['code']>;
@@ -75,6 +78,18 @@ declare type PublicEventTypeToCallback = {
 declare type PublicRequestError = {
     code: RequestErrorBaseCode | 'not_supported' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | 'set_component_data_failed';
     message?: string;
+};
+
+declare type PushTopicData = {
+    topics: {
+        id: number;
+        name: string;
+        subscribed: boolean;
+    }[];
+};
+
+declare type PushTopicIds = {
+    ids: number[];
 };
 
 declare class RequestError<T = string> extends Error {

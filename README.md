@@ -20,18 +20,21 @@ const { api } = new PrenlyAppSDK();
 
 ### Functions
 
-| Function                 | Signature                                            | Description                                                                         |
-| ------------------------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Login                    | `api.login(): Promise<UserDataJwt>`                  | Trigger a login flow in the app.                                                    |
-| Logout                   | `api.logout(): Promise<UserDataJwt>`                 | Trigger a logout flow in the app.                                                   |
-| Show no access alert     | `api.showNoAccessAlert(): Promise<void>`             | Trigger a show no access alert flow in the app.                                     |
-| Get user JWT             | `api.getUserJwt(): Promise<UserDataJwt>`             | Retrieve information about the user as a Jwt.                                       |
-| Get user consent         | `api.getUserConsent(): Promise<UserConsent \| null>` | Retrieve the current consent that the user granted, or _null_ if no CMP is used.    |
-| Show user consent dialog | `api.showUserConsentDialog(): Promise<void>`         | Trigger the display of the consent dialog.                                          |
-| Play or pause audio      | `api.playPauseAudio(AudioData): Promise<void>`       | Add audio and play it using the native app player, or pause when playing.           |
-| Queue or dequeue audio   | `api.queueDequeueAudio(AudioData): Promise<void>`    | Queue or dequeue audio using the native app player.                                 |
-| Get audio status         | `api.getAudioStatus(AudioId): Promise<AudioStatus>`  | Retrieve audio status.                                                              |
-| Set component data       | `api.setComponentData(ComponentData): Promise<void>` | Set custom data to be displayed in the start page component connected to a webview. |
+| Function                     | Signature                                                | Description                                                                                                     |
+| ---------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Login                        | `api.login(): Promise<UserDataJwt>`                      | Trigger a login flow in the app.                                                                                |
+| Logout                       | `api.logout(): Promise<UserDataJwt>`                     | Trigger a logout flow in the app.                                                                               |
+| Show no access alert         | `api.showNoAccessAlert(): Promise<void>`                 | Trigger a show no access alert flow in the app.                                                                 |
+| Get user JWT                 | `api.getUserJwt(): Promise<UserDataJwt>`                 | Retrieve information about the user as a Jwt.                                                                   |
+| Get user consent             | `api.getUserConsent(): Promise<UserConsent \| null>`     | Retrieve the current consent that the user granted, or _null_ if no CMP is used.                                |
+| Show user consent dialog     | `api.showUserConsentDialog(): Promise<void>`             | Trigger the display of the consent dialog.                                                                      |
+| Play or pause audio          | `api.playPauseAudio(AudioData): Promise<void>`           | Add audio and play it using the native app player, or pause when playing.                                       |
+| Queue or dequeue audio       | `api.queueDequeueAudio(AudioData): Promise<void>`        | Queue or dequeue audio using the native app player.                                                             |
+| Get audio status             | `api.getAudioStatus(AudioId): Promise<AudioStatus>`      | Retrieve audio status.                                                                                          |
+| Set component data           | `api.setComponentData(ComponentData): Promise<void>`     | Set custom data to be displayed in the start page component connected to a webview.                             |
+| Get push topics              | `api.getPushTopics(): Promise<PushTopicData>`            | Get a list of topics for segmented push notifications, including the device subscription status for each topic. |
+| Subscribe to push topics     | `api.subscribePushTopics(PushTopicIds): Promise<void>`   | Subscribe to one or more push topics.                                                                           |
+| Unsubscribe from push topics | `api.unsubscribePushTopics(PushTopicIds): Promise<void>` | Unsubscribe from one or more push topics.                                                                       |
 
 #### Example
 
@@ -185,6 +188,26 @@ In addition to the standard claims, the payload also includes the following:
 {
   component_id: string;
   item_id: string;
+}
+```
+
+#### PushTopicData
+
+```typescript
+{
+  topics: {
+    id: number;
+    name: string;
+    subscribed: boolean;
+  }[];
+}
+```
+
+#### PushTopicIds
+
+```typescript
+{
+  ids: number[];
 }
 ```
 
