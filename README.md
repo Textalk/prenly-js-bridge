@@ -16,6 +16,8 @@ import PrenlyAppSDK from "prenly-js-bridge";
 const { api } = new PrenlyAppSDK();
 ```
 
+The `api` object is available when the bridge is active in the WebView. If `api` is undefined, the bridge is not activated.
+
 ## API
 
 ### Functions
@@ -74,7 +76,7 @@ try {
 | audioStatusChange    | AudioStatus          | Triggers when the status of audio initialized by the SDK is changed.                                        |
 | componentItemVisible | ComponentItemVisible | Triggers when an item is visible for the user within a start page component that is connected to a webview. |
 
-#### Callback Parameters
+#### Callback parameters
 
 | Parameter   | Description                                                                              |
 | ----------- | ---------------------------------------------------------------------------------------- |
@@ -227,3 +229,16 @@ In addition to the standard claims, the payload also includes the following:
   message?: string;
 }
 ```
+
+##### Error codes
+
+| Code                         | Applies to            | Description                                   |
+| ---------------------------- | --------------------- | --------------------------------------------- |
+| `rejected`                   | All requests          | The request was rejected by the app.          |
+| `not_supported`              | All requests          | The request is not supported by the app.      |
+| `feature_disabled`           | All requests          | The requested feature is disabled in the app. |
+| `login_failed`               | `login()`             | The login flow failed.                        |
+| `logout_failed`              | `logout()`            | The logout flow failed.                       |
+| `play_pause_audio_failed`    | `playPauseAudio()`    | Playing or pausing the audio failed.          |
+| `queue_dequeue_audio_failed` | `queueDequeueAudio()` | Queuing or dequeuing the audio failed.        |
+| `set_component_data_failed`  | `setComponentData()`  | Setting the component data failed.            |
