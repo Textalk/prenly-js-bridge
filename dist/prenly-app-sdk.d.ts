@@ -13,7 +13,7 @@ declare type AudioId = {
 
 declare type AudioStatus = {
     id: string;
-    status: 'playing' | 'paused' | 'loading';
+    status: 'loading' | 'playing' | 'paused' | 'stopped';
     queued: boolean;
 };
 
