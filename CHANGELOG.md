@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2.1.1] - 2026-10-15
+
+- Added `'stopped'` to the possible values of `status` in the `AudioStatus` type.
+- Renamed the JWT claim `otlc` to `transfer_token` in the README.
+
 ## [v2.1.0] - 2026-05-21
 
 - Added new API methods `getPushTopics`, `subscribePushTopics`, and `unsubscribePushTopics` for managing push notification topic subscriptions.

@@ -114,7 +114,7 @@ In addition to the standard claims, the payload also includes the following:
   // Custom claims:
   customer_number?: string;
   prenly_package_slugs?: string[];
-  otlc?: string;
+  transfer_token?: string;
   is_logged_in: boolean;
 }
 ```
@@ -162,7 +162,7 @@ In addition to the standard claims, the payload also includes the following:
 ```typescript
 {
   id: string;
-  status: "playing" | "paused" | "loading";
+  status: 'loading' | 'playing' | 'paused' | 'stopped';
   queued: boolean;
 }
 ```
