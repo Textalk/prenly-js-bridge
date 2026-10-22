@@ -37,6 +37,7 @@ The `api` object is available when the bridge is active in the WebView. If `api`
 | Get push topics              | `api.getPushTopics(): Promise<PushTopicData>`            | Get a list of topics for segmented push notifications, including the device subscription status for each topic. |
 | Subscribe to push topics     | `api.subscribePushTopics(PushTopicIds): Promise<void>`   | Subscribe to one or more push topics.                                                                           |
 | Unsubscribe from push topics | `api.unsubscribePushTopics(PushTopicIds): Promise<void>` | Unsubscribe from one or more push topics.                                                                       |
+| Open deeplink                | `api.openDeeplink(DeeplinkPath): Promise<void>`          | Open a deeplink to an internal app page or a custom tab page.                                                   |
 
 #### Example
 
@@ -162,7 +163,7 @@ In addition to the standard claims, the payload also includes the following:
 ```typescript
 {
   id: string;
-  status: 'loading' | 'playing' | 'paused' | 'stopped';
+  status: "loading" | "playing" | "paused" | "stopped";
   queued: boolean;
 }
 ```
@@ -213,6 +214,22 @@ In addition to the standard claims, the payload also includes the following:
 }
 ```
 
+#### DeeplinkPath
+
+```typescript
+{
+  path: string;
+}
+```
+
+Examples of `path`:
+
+- Settings: `/settings`
+- Publication: `/p/{title_slug}/{issue_slug}/p/{title_id}/{issue_uid}`
+- Custom tab page: `/custom-tab?base={base_url}&path={destination_path}`
+  - Both base and path should be URL-encoded.
+  - Example: /custom-tab?base=https%3A%2F%2Fexample.com%2Fcategories%3Fcat%3Dnews&path=%2Fcampaign%2Fsummer
+
 #### RequestError (extends Error)
 
 ```typescript
@@ -225,7 +242,8 @@ In addition to the standard claims, the payload also includes the following:
     | 'logout_failed'
     | 'play_pause_audio_failed'
     | 'queue_dequeue_audio_failed'
-    | 'set_component_data_failed';
+    | 'set_component_data_failed'
+    | 'open_deeplink_failed';
   message?: string;
 }
 ```
@@ -242,3 +260,4 @@ In addition to the standard claims, the payload also includes the following:
 | `play_pause_audio_failed`    | `playPauseAudio()`    | Playing or pausing the audio failed.          |
 | `queue_dequeue_audio_failed` | `queueDequeueAudio()` | Queuing or dequeuing the audio failed.        |
 | `set_component_data_failed`  | `setComponentData()`  | Setting the component data failed.            |
+| `open_deeplink_failed`       | `openDeeplink()`      | Opening the deeplink failed.                  |

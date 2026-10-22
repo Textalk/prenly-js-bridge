@@ -247,6 +247,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           data
         );
       },
+      async openDeeplink(data) {
+        return postMessageHandler.sendMessageAsync(
+          "prenly_open_deeplink",
+          data
+        );
+      },
       on(type, callback) {
         const params = getEventParams(type);
         postMessageHandler.on(

@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.2.0] - 2026-10-22
+
+- Added the `openDeeplink` API method for opening internal app pages and custom tab pages.
+
 ## [v2.1.1] - 2026-10-15
 
 - Added `'stopped'` to the possible values of `status` in the `AudioStatus` type.
