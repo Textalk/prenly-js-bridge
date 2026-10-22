@@ -243,6 +243,12 @@ function getApiV1(postMessageHandler) {
         data
       );
     },
+    async openDeeplink(data) {
+      return postMessageHandler.sendMessageAsync(
+        "prenly_open_deeplink",
+        data
+      );
+    },
     on(type, callback) {
       const params = getEventParams(type);
       postMessageHandler.on(

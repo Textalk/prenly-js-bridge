@@ -35,6 +35,10 @@ declare type ComponentItemVisible = {
     item_id: string;
 };
 
+declare type DeeplinkPath = {
+    path: string;
+};
+
 declare class PrenlyAppSDK {
     supportedVersion: string | undefined;
     api: PublicApiV1 | undefined;
@@ -60,6 +64,7 @@ declare type PublicApiV1 = {
     getPushTopics: () => Promise<PushTopicData>;
     subscribePushTopics: (data: PushTopicIds) => Promise<void>;
     unsubscribePushTopics: (data: PushTopicIds) => Promise<void>;
+    openDeeplink: (data: DeeplinkPath) => Promise<void>;
     on: <T extends PublicEventType>(type: T, callback: PublicEventTypeToCallback[T]) => void;
     off: <T extends PublicEventType>(type: T, callback?: PublicEventTypeToCallback[T]) => void;
     isRequestError: (error: unknown) => error is RequestError<PublicRequestError['code']>;
@@ -76,7 +81,7 @@ declare type PublicEventTypeToCallback = {
 };
 
 declare type PublicRequestError = {
-    code: RequestErrorBaseCode | 'not_supported' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | 'set_component_data_failed';
+    code: RequestErrorBaseCode | 'not_supported' | 'feature_disabled' | 'login_failed' | 'logout_failed' | 'play_pause_audio_failed' | 'queue_dequeue_audio_failed' | 'set_component_data_failed' | 'open_deeplink_failed';
     message?: string;
 };
 
